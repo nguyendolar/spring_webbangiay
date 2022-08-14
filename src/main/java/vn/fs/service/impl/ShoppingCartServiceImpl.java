@@ -22,8 +22,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	@Override
 	public void add(CartItem item) {
 		CartItem existedItem = map.get(item.getId());
-
-		if (existedItem != null) {
+		if (existedItem != null && existedItem.getSize().getId() == item.getSize().getId() && existedItem.getColor().getId() == item.getColor().getId()) {
 			existedItem.setQuantity(item.getQuantity() + existedItem.getQuantity());
 			existedItem.setTotalPrice(item.getTotalPrice() + existedItem.getUnitPrice() * existedItem.getQuantity());
 		} else {

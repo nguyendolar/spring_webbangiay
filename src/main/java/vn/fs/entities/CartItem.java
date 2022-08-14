@@ -19,4 +19,6 @@ public class CartItem {
 	private int quantity;
 	private double totalPrice;
 	private Product product;
+	private Size size;
+	private Color color;
 }

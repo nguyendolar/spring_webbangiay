@@ -191,6 +191,10 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 							</h6>
 							<label>Đơn giá :</label>
 							<p>[[${#numbers.formatDecimal(item.product.price - (item.product.price * item.product.discount/100), 1, 'DEFAULT', 0, 'DEFAULT')}+' đ']]</p>
+							<span>Màu :</span>
+							<span th:text="${item.getColor().getName()}"></span>
+							<span>Size:</span>
+							<span th:text="${item.getSize().getName()}"></span>
 						</div>
 						<div class="cart-action-group">
 							<div class="product-action">

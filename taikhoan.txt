@@ -4,3 +4,23 @@ admin#123
 client:
  lamdeptrai@gmail.com			
  thanhlam01
+
+
+	<form th:action="@{/admin/addProduct1}" th:object="${product}" method="post" enctype="multipart/form-data">
+																	<div class="col-md-12 pr-0">
+																		<input type="hidden" name="idProduct" th:value="${item.productId}">
+																		<div class="form-group form-group-default">
+																			<label>Danh sách màu</label>
+																			<select class="form-control"
+																					name="idColor" id="idColor">
+																				<option th:each="item : ${colors}"
+																						th:value="${item.id}" th:text="${item.name}">
+																				</option>
+																			</select>
+																		</div>
+																	</div>
+																	<div class="modal-footer no-bd">
+																		<button type="submit" id="" class="btn btn-primary">Thêm mới</button>
+																		<button type="button" class="btn btn-danger" data-dismiss="modal">Hủy</button>
+																	</div>
+																</form>

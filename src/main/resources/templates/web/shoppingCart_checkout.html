@@ -78,6 +78,9 @@
                         <th scope="col">Sản phẩm</th>
                         <th scope="col">Tên sản phẩm</th>
                         <th scope="col">Đơn giá</th>
+                        <th scope="col">Size</th>
+                        <th scope="col">Màu</th>
+                        <th scope="col">Đơn giá</th>
                         <th scope="col">Thể loại</th>
                         <th scope="col">Số lượng</th>
                         <th scope="col">action</th>
@@ -94,6 +97,8 @@
                         <td class="table-price">
                           <h6>[[${#numbers.formatDecimal(item.product.price - (item.product.price * item.product.discount/100), 1, 'DEFAULT', 0, 'DEFAULT')} +' đ']]<small>/kg</small></h6>
                         </td>
+                        <td class="table-name"><h6 th:text="${item.getSize().getName()}"></h6></td>
+                        <td class="table-name"><h6 th:text="${item.getColor().getName()}"></h6></td>
                         <td class="table-brand"><h6>[[${item.product.category.categoryName}]]</h6></td>
                         <td class="table-quantity"><h6>[[${item.quantity}]]</h6></td>
                         <td class="table-action">

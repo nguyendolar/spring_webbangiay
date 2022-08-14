@@ -26,12 +26,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import vn.fs.entities.Category;
-import vn.fs.entities.Product;
-import vn.fs.entities.User;
-import vn.fs.repository.CategoryRepository;
-import vn.fs.repository.ProductRepository;
-import vn.fs.repository.UserRepository;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import vn.fs.entities.*;
+import vn.fs.repository.*;
+import vn.fs.service.ColorService;
+import vn.fs.service.SizeService;
 
 /**
  * @author DongTHD
@@ -52,6 +51,18 @@ public class ProductController{
 	
 	@Autowired
 	UserRepository userRepository;
+
+	@Autowired
+	ColorService colorService;
+
+	@Autowired
+	SizeService sizeService;
+
+	@Autowired
+	ProductColorRepository productColorRepository;
+
+	@Autowired
+	ProductSizeRepository productSizeRepository;
 	
 	@ModelAttribute(value = "user")
 	public User user(Model model, Principal principal, User user) {
@@ -75,10 +86,12 @@ public class ProductController{
 	@ModelAttribute("products")
 	public List<Product> showProduct(Model model) {
 		List<Product> products = productRepository.findAll();
+
 		model.addAttribute("products", products);
 
 		return products;
 	}
+
 
 	@GetMapping(value = "/products")
 	public String products(Model model, Principal principal) {
@@ -123,6 +136,23 @@ public class ProductController{
 
 		return categoryList;
 	}
+
+	// show select option ở add product
+	@ModelAttribute("colors")
+	public List<Color> showColor(Model model) {
+		List<Color> colors = colorService.findAll();
+		model.addAttribute("colors", colors);
+
+		return colors;
+	}
+
+	// show select option ở add product
+	@ModelAttribute("sizes")
+	public List<Size> showSize(Model model) {
+		List<Size> sizes = sizeService.findAll();
+		model.addAttribute("sizes", sizes);
+		return sizes;
+	}
 	
 	// get Edit brand
 	@GetMapping(value = "/editProduct/{id}")
@@ -139,6 +169,77 @@ public class ProductController{
 	public String delProduct(@PathVariable("id") Long id, Model model) {
 		productRepository.deleteById(id);
 		model.addAttribute("message", "Delete successful!");
+
+		return "redirect:/admin/products";
+	}
+
+	// add product
+	@PostMapping(value = "/addProduct1")
+	public String addProduct1(@ModelAttribute("product") Product product, ModelMap model, HttpServletRequest httpServletRequest, RedirectAttributes rd) {
+
+		System.out.println(httpServletRequest.getParameter("idColor"));
+		System.out.println(httpServletRequest.getParameter("idProduct"));
+		Long idColor = Long.parseLong(httpServletRequest.getParameter("idColor"));
+		Long idProduct = Long.parseLong(httpServletRequest.getParameter("idProduct"));
+		System.out.println(idProduct);
+		System.out.println(idColor);
+
+		ProductColor obj = new ProductColor();
+		Color color = colorService.findColorById(idColor);
+		Product product1 = productRepository.getById(idProduct);
+		ProductColor productColor = productColorRepository.findProductColorByColorAndProduct(color,product1);
+		if(productColor == null){
+			obj.setColor(color);
+			obj.setProduct(product1);
+			productColorRepository.save(obj);
+			rd.addFlashAttribute("message", "Thêm color cho " + product1.getProductName() + " thành công");
+		}else{
+			rd.addFlashAttribute("error", "Màu của " + product1.getProductName() + " đã tồn tại");
+		}
+
+
+		return "redirect:/admin/products";
+	}
+
+	// add product
+	@PostMapping(value = "/addProduct2")
+	public String addProduct2(@ModelAttribute("product") Product product, ModelMap model, HttpServletRequest httpServletRequest, RedirectAttributes rd) {
+
+		System.out.println(httpServletRequest.getParameter("idSize"));
+		System.out.println(httpServletRequest.getParameter("idProduct"));
+		Long idSize = Long.parseLong(httpServletRequest.getParameter("idSize"));
+		Long idProduct = Long.parseLong(httpServletRequest.getParameter("idProduct"));
+		System.out.println(idProduct);
+		System.out.println(idSize);
+
+		ProductSize obj = new ProductSize();
+		Size size = sizeService.findSizeById(idSize);
+		Product product1 = productRepository.getById(idProduct);
+		ProductSize productSie = productSizeRepository.findProductSizeBySizeAndProduct(size, product1);
+		if(productSie == null){
+			obj.setSize(size);
+			obj.setProduct(product1);
+			productSizeRepository.save(obj);
+			rd.addFlashAttribute("message", "Thêm size cho " + product1.getProductName() + " thành công");
+		}else{
+			rd.addFlashAttribute("error", "Size của " + product1.getProductName() + " đã tồn tại");
+		}
+
+
+		return "redirect:/admin/products";
+	}
+
+	@PostMapping(value = "/addColor")
+	public String addColor(@PathVariable("id") Long id, Model model,HttpServletRequest request) {
+		Long idColor = Long.parseLong(request.getParameter("idColor"));
+		Long idProduct = Long.parseLong(request.getParameter("idProduct"));
+		ProductColor obj = new ProductColor();
+		Color color = colorService.findColorById(idColor);
+		Product product = productRepository.getById(idProduct);
+		obj.setColor(color);
+		obj.setProduct(product);
+		productColorRepository.save(obj);
+		model.addAttribute("message", "Thêm color cho " + product.getProductName() + " thành công");
 
 		return "redirect:/admin/products";
 	}

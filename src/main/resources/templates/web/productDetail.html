@@ -72,7 +72,7 @@
             </div>
           </div>
           <div class="col-lg-6">
-            
+
             <div class="details-content">
               <h3 class="details-name">
                 <a href="#">[[${product.productName}]]</a>
@@ -96,38 +96,65 @@
               <p class="details-desc">
                 [[${product.description}]]
               </p>
-              <div class="details-list-group">
-                <label class="details-list-title">Xem thêm:</label>
-                <ul class="details-tag-list">
-                  <li th:each="item : ${categoryList}">
-                  	<a th:href="@{/productByCategory(categoryId=${item.categoryId})}">[[${item.categoryName}]]</a>
-                  </li>
-                </ul>
-              </div>
-              <div class="details-list-group">
-                <label class="details-list-title">Share:</label>
-                <ul class="details-share-list">
-                  <li>
-                    <a href="javascript:void(0);" class="icofont-facebook" title="Facebook"></a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0);" class="icofont-twitter" title="Twitter"></a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0);" class="icofont-linkedin" title="Linkedin"></a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0);" class="icofont-instagram" title="Instagram"></a>
-                  </li>
-                </ul>
-              </div>
-              <div class="details-add-group">
-                <a class="product-add1" style="background-color: #119744" title="Thêm giỏ hàng" th:href="@{/addToCart(productId=${product.productId})}">
-                  <i style="color: white" class="fas fa-shopping-basket"></i>
-                  <span style="color: white">Thêm giỏ hàng</span>
-                </a>
-                
-              </div>
+				<form th:action="@{/addToCart(productId=${product.productId})}" method="post">
+				<div>
+					<div class="row details-desc">
+						<div class="col-6">
+							<select name="idColor" class="form-select" required>
+								<option selected value="">
+									Chọn màu
+								</option>
+								<option th:each="item : ${colors}"
+										th:value="${item.id}" th:text="${item.name}">
+								</option>
+							</select>
+						</div>
+						<div class="col-6">
+							<select name="idSize" class="form-select" required>
+								<option selected value="">
+									Chọn size
+								</option>
+								<option th:each="item : ${sizes}"
+										th:value="${item.id}" th:text="${item.name}">
+								</option>
+							</select>
+						</div>
+					</div>
+					<div class="details-list-group">
+						<label class="details-list-title">Xem thêm:</label>
+						<ul class="details-tag-list">
+							<li th:each="item : ${categoryList}">
+								<a th:href="@{/productByCategory(categoryId=${item.categoryId})}">[[${item.categoryName}]]</a>
+							</li>
+						</ul>
+					</div>
+					<div class="details-list-group">
+						<label class="details-list-title">Share:</label>
+						<ul class="details-share-list">
+							<li>
+								<a href="javascript:void(0);" class="icofont-facebook" title="Facebook"></a>
+							</li>
+							<li>
+								<a href="javascript:void(0);" class="icofont-twitter" title="Twitter"></a>
+							</li>
+							<li>
+								<a href="javascript:void(0);" class="icofont-linkedin" title="Linkedin"></a>
+							</li>
+							<li>
+								<a href="javascript:void(0);" class="icofont-instagram" title="Instagram"></a>
+							</li>
+						</ul>
+					</div>
+					<div class="details-add-group">
+						<button type="submit" class="product-add1" style="background-color: #119744" title="Thêm giỏ hàng">
+							<i style="color: white" class="fas fa-shopping-basket"></i>
+							<span style="color: white">Thêm giỏ hàng</span>
+						</button>
+
+					</div>
+				</div>
+
+			</form>
               <div class="details-action-group">
                 <a class="details-wish" href="javascript:void(0);" title="Yêu thích">
                 <i class="icofont-heart"></i>

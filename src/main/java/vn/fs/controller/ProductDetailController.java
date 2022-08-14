@@ -6,12 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import vn.fs.commom.CommomDataService;
+import vn.fs.entities.Color;
 import vn.fs.entities.Product;
+import vn.fs.entities.Size;
 import vn.fs.entities.User;
 import vn.fs.repository.ProductRepository;
+import vn.fs.service.ColorService;
+import vn.fs.service.SizeService;
 
 /**
  * @author DongTHD
@@ -26,6 +31,12 @@ public class ProductDetailController extends CommomController{
 	@Autowired
 	CommomDataService commomDataService;
 
+	@Autowired
+	ColorService colorService;
+
+	@Autowired
+	SizeService sizeService;
+
 	@GetMapping(value = "productDetail")
 	public String productDetail(@RequestParam("id") Long id, Model model, User user) {
 
@@ -36,6 +47,23 @@ public class ProductDetailController extends CommomController{
 		listProductByCategory10(model, product.getCategory().getCategoryId());
 
 		return "web/productDetail";
+	}
+
+	// show select option ở add product
+	@ModelAttribute("colors")
+	public List<Color> showColor(Model model) {
+		List<Color> colors = colorService.findAll();
+		model.addAttribute("colors", colors);
+
+		return colors;
+	}
+
+	// show select option ở add product
+	@ModelAttribute("sizes")
+	public List<Size> showSize(Model model) {
+		List<Size> sizes = sizeService.findAll();
+		model.addAttribute("sizes", sizes);
+		return sizes;
 	}
 	
 	// Gợi ý top 10 sản phẩm cùng loại

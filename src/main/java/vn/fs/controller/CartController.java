@@ -27,15 +27,13 @@ import com.paypal.base.rest.PayPalRESTException;
 import vn.fs.commom.CommomDataService;
 import vn.fs.config.PaypalPaymentIntent;
 import vn.fs.config.PaypalPaymentMethod;
-import vn.fs.entities.CartItem;
-import vn.fs.entities.Order;
-import vn.fs.entities.OrderDetail;
-import vn.fs.entities.Product;
-import vn.fs.entities.User;
+import vn.fs.entities.*;
 import vn.fs.repository.OrderDetailRepository;
 import vn.fs.repository.OrderRepository;
+import vn.fs.service.ColorService;
 import vn.fs.service.PaypalService;
 import vn.fs.service.ShoppingCartService;
+import vn.fs.service.SizeService;
 import vn.fs.util.Utils;
 
 /**
@@ -63,6 +61,12 @@ public class CartController extends CommomController {
 	@Autowired
 	OrderDetailRepository orderDetailRepository;
 
+	@Autowired
+	ColorService colorService;
+
+	@Autowired
+	SizeService sizeService;
+
 	public Order orderFinal = new Order();
 
 	public static final String URL_PAYPAL_SUCCESS = "pay/success";
@@ -88,10 +92,15 @@ public class CartController extends CommomController {
 	}
 
 	// add cartItem
-	@GetMapping(value = "/addToCart")
+	@PostMapping(value = "/addToCart")
 	public String add(@RequestParam("productId") Long productId, HttpServletRequest request, Model model) {
 
 		Product product = productRepository.findById(productId).orElse(null);
+		Long idColor = Long.parseLong(request.getParameter("idColor"));
+		Long idSize = Long.parseLong(request.getParameter("idSize"));
+
+		Color color = colorService.findColorById(idColor);
+		Size size = sizeService.findSizeById(idSize);
 
 		session = request.getSession();
 		Collection<CartItem> cartItems = shoppingCartService.getCartItems();
@@ -101,8 +110,12 @@ public class CartController extends CommomController {
 			item.setQuantity(1);
 			item.setProduct(product);
 			item.setId(productId);
+			item.setColor(color);
+			item.setSize(size);
 			shoppingCartService.add(item);
 		}
+
+
 		session.setAttribute("cartItems", cartItems);
 		model.addAttribute("totalCartItems", shoppingCartService.getCount());
 
@@ -203,6 +216,8 @@ public class CartController extends CommomController {
 			OrderDetail orderDetail = new OrderDetail();
 			orderDetail.setQuantity(cartItem.getQuantity());
 			orderDetail.setOrder(order);
+			orderDetail.setSize(cartItem.getSize());
+			orderDetail.setColor(cartItem.getColor());
 			orderDetail.setProduct(cartItem.getProduct());
 			double unitPrice = cartItem.getProduct().getPrice();
 			orderDetail.setPrice(unitPrice);

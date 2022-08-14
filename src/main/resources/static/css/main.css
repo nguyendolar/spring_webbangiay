@@ -1719,6 +1719,7 @@ tbody tr td:last-child {
 .product-name {
   margin-bottom: 3px;
   text-transform: capitalize;
+  height: 50px;
 }
 .product-name a {
   color: var(--sub-heading);

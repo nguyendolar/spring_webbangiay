@@ -190,6 +190,8 @@
 												<th>Số lượng</th>
 												<th>Ngày thêm</th>
 												<th>Mô tả sản phẩm</th>
+												<th>Size</th>
+												<th>Màu</th>
 												<th style="width: 10%">Hành động</th>
 											</tr>
 										</thead>
@@ -204,6 +206,8 @@
 												<th>Số lượng</th>
 												<th>Ngày thêm</th>
 												<th>Mô tả sản phẩm</th>
+												<th>Size</th>
+												<th>Màu</th>
 												<th>Hành động</th>
 											</tr>
 										</tfoot>
@@ -220,16 +224,21 @@
 												<td>[[${item.quantity}]]</td>
 												<td>[[${item.enteredDate}]]</td>
 												<td>[[${item.description}]]</td>
+
+												<td>
+													<a class="btn btn-primary btn-round ml-auto" data-toggle="modal" th:data-target="${'#addSize'+item?.productId}"
+													   type="button"  title=""  data-original-title="Thêm size">
+														<i class="fa fa-plus"></i>
+													</a>
+												</td>
+												<td>
+													<a class="btn btn-primary btn-round ml-auto" data-toggle="modal" th:data-target="${'#addColor'+item?.productId}"
+													   type="button"  title=""  data-original-title="Thêm màu">
+														<i class="fa fa-plus"></i>
+													</a>
+												</td>
 												<td>
 													<div class="form-button-action">
-														<a class="btn btn-primary btn-round ml-auto" data-toggle="modal" th:data-target="${'#addColor'+item?.productId}"
-														   type="button"  title=""  data-original-title="Thêm màu">
-															<i class="fa fa-plus"></i>
-														</a>
-														<a class="btn btn-primary btn-round ml-auto" data-toggle="modal" th:data-target="${'#addSize'+item?.productId}"
-														   type="button"  title=""  data-original-title="Thêm size">
-															<i class="fa fa-plus"></i>
-														</a>
 														<a th:href="@{/admin/editProduct/{productId}(productId=${item.productId})}"
 															type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Chỉnh sửa">
 															<i class="fa fa-edit"></i>

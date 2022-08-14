@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import vn.fs.commom.CommomDataService;
-import vn.fs.entities.Color;
-import vn.fs.entities.Product;
-import vn.fs.entities.Size;
-import vn.fs.entities.User;
+import vn.fs.entities.*;
 import vn.fs.repository.ProductRepository;
 import vn.fs.service.ColorService;
 import vn.fs.service.SizeService;
@@ -41,7 +38,11 @@ public class ProductDetailController extends CommomController{
 	public String productDetail(@RequestParam("id") Long id, Model model, User user) {
 
 		Product product = productRepository.findById(id).orElse(null);
+		List<ProductColor> procolor = colorService.findProductColorByProduct(product);
+		List<ProductSize> prosize = sizeService.findProductSizeByProduct(product);
 		model.addAttribute("product", product);
+		model.addAttribute("procolor", procolor);
+		model.addAttribute("prosize", prosize);
 
 		commomDataService.commonData(model, user);
 		listProductByCategory10(model, product.getCategory().getCategoryId());

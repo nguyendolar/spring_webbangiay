@@ -16,7 +16,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 				<div class="row">
 					<div class="col-md-12 col-lg-5">
 						<div class="header-top-welcome">
-							<p>Chào mừng bạn đến với cửa hàng thực phẩm !</p>
+							<p>Chào mừng bạn đến với cửa hàng bán giày !</p>
 						</div>
 					</div>
 					<div class="col-md-5 col-lg-3">
@@ -192,7 +192,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 							<label>Đơn giá :</label>
 							<p>[[${#numbers.formatDecimal(item.product.price - (item.product.price * item.product.discount/100), 1, 'DEFAULT', 0, 'DEFAULT')}+' đ']]</p>
 							<span>Màu :</span>
-							<span th:text="${item.getColor().getName()}"></span>
+							<span th:text="${item.getColor().getName()}"></span><br>
 							<span>Size:</span>
 							<span th:text="${item.getSize().getName()}"></span>
 						</div>

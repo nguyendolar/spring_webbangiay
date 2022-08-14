@@ -19,7 +19,7 @@
       name="keywords"
       content="organic, food, shop, ecommerce, store, html, bootstrap, template, agriculture, vegetables, products, farm, grocery, natural, online"
     />
-    <title>Web bán hàng nông sản</title>
+    <title>Web bán giày</title>
     <link rel="icon" href="images/favicon.png" />
     <link rel="stylesheet" href="fonts/flaticon/flaticon.css" />
     <link rel="stylesheet" href="fonts/icofont/icofont.min.css" />
@@ -141,7 +141,7 @@
                         
                         <a
                         title="Video về sản phẩm"
-                        href="https://youtu.be/9xzcVxSBbG8"
+                        href="https://youtu.be/7cnq-IiX8zU"
                         class="venobox fas fa-play"
                         data-autoplay="true"
                         data-vbtype="video">
@@ -166,10 +166,10 @@
                     </h6>
                     <h6 class="product-price">
                       <del>[[${#numbers.formatDecimal(item.price, 1, 'DEFAULT', 0, 'DEFAULT')}+' đ']]</del>
-                      <span>[[${#numbers.formatDecimal(item.price - (item.price * item.discount/100), 1, 'DEFAULT', 0, 'DEFAULT')}+' đ']]<small>/kg</small></span>
+                      <span>[[${#numbers.formatDecimal(item.price - (item.price * item.discount/100), 1, 'DEFAULT', 0, 'DEFAULT')}+' đ']]</span>
                     </h6>
                     
-                    <a class="product-add1" title="Thêm Giỏ Hàng" th:href="@{/addToCart(productId=${item.productId})}" >
+                    <a class="product-add1" title="Thêm Giỏ Hàng" th:href="@{/productDetail(id=${item.productId})}" >
                       <i class="fas fa-shopping-basket"></i>
                       <span>Thêm Giỏ Hàng</span>
                     </a>
@@ -236,7 +236,7 @@
 						</div>
 						<div class="intro-content">
 							<h5>Giao Hàng Tận Nhà Miễn Phí</h5>
-							<p>Lorem ipsum dolor sit amet adipisicing elit nobis.</p>
+
 						</div>
 					</div>
 				</div>

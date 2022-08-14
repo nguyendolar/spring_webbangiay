@@ -84,6 +84,8 @@
 												<th width="8%">STT</th>
 												<th>Sản phẩm</th>
 						                        <th>Tên sản phẩm</th>
+												<th>Size</th>
+												<th>Màu</th>
 						                        <th>Số lượng</th>
 						                        <th>Đơn giá</th>
 						                        <th>Tổng tiền</th>
@@ -94,6 +96,8 @@
 												<th width="8%">STT</th>
 												<th>Sản phẩm</th>
 						                        <th>Tên sản phẩm</th>
+												<th>Size</th>
+												<th>Màu</th>
 						                        <th>Số lượng</th>
 						                        <th>Đơn giá</th>
 						                        <th>Tổng tiền</th>
@@ -106,6 +110,8 @@
 													<img th:src="@{'/loadImage?imageName='+${item.product.productImage}}" width="80px" alt="product" />
 												</td>
 						                        <td>[[${item.product.productName}]]</td>
+												<td>[[${item.size.name}]]</td>
+												<td>[[${item.color.name}]]</td>
 						                        <td>[[${item.quantity}]]</td>
 						                        <td>[[${#numbers.formatDecimal(item.price - (item.price * item.product.discount/100), 1, 'DEFAULT', 0, 'DEFAULT')}+ ' đ']]</td>
 						                        <td>[[${#numbers.formatDecimal((item.price - (item.price * item.product.discount/100)) * item.quantity, 1, 'DEFAULT', 0, 'DEFAULT')}+ ' đ']]</td>
